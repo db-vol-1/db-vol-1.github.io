@@ -121,8 +121,8 @@ header {
 }
 .theme-toggle-label {
     justify-content: center;
-    min-width: 2.4rem;
-    padding-inline: 0.55rem;
+    min-width: 2.5rem;
+    padding-inline: 0.6rem;
 }
 .nav-toggle-label::before {
     content: "\2630";
@@ -136,21 +136,23 @@ header {
     font-size: 1.35em;
 }
 .theme-toggle-label::before {
-    content: "\263e";
+    content: "\f186";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
     font-size: 1.1em;
     line-height: 1;
 }
 @media (prefers-color-scheme: dark) {
     .theme-toggle-label::before {
-        content: "\2600";
+        content: "\f185";
     }
 }
 .theme-toggle:checked + .theme-toggle-label::before {
-    content: "\2600";
+    content: "\f185";
 }
 @media (prefers-color-scheme: dark) {
     .theme-toggle:checked + .theme-toggle-label::before {
-        content: "\263e";
+        content: "\f186";
     }
 }
 .nav-list {
@@ -184,9 +186,17 @@ header {
         margin: 0;
     }
     .nav-list .theme-control {
+        display: block;
+        padding: 0;
+    }
+    .nav-list .theme-toggle-label {
+        border: 0;
+        border-radius: 0;
         display: flex;
-        justify-content: flex-end;
+        justify-content: flex-start;
+        min-width: 0;
         padding: 0.65rem;
+        width: 100%;
     }
     .nav-list a {
         display: block;
