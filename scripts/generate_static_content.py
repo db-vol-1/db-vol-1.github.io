@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render static pages and social metadata from the blog map."""
+"""Generate social metadata from the blog map."""
 
 import html
 import json
@@ -12,15 +12,90 @@ from urllib.parse import urljoin
 ROOT = Path(__file__).resolve().parents[1]
 MAP_PATH = ROOT / "blog" / "blog-map.json"
 SITE_URL = "https://db-vol-1.github.io/"
-HTML_FILES = [
-    ROOT / "index.html",
-    ROOT / "blog" / "browse.html",
-    ROOT / "pages" / "projects.html",
-]
+DEFAULT_IMAGE = "./images/favicon.ico"
+THEME_COLOR = "#f5c542"
 
 
 def absolute_url(path: str) -> str:
     return urljoin(SITE_URL, path.lstrip("./"))
+
+
+def generated_metadata_block(
+    *,
+    title: str,
+    description: str,
+    page_url: str,
+    image_url: str,
+    page_type: str = "website",
+) -> str:
+    escaped_title = html.escape(title, quote=True)
+    escaped_description = html.escape(description, quote=True)
+    escaped_url = html.escape(page_url, quote=True)
+    escaped_image_url = html.escape(image_url, quote=True)
+    return f"""    <meta name="description" content="{escaped_description}">
+    <meta name="theme-color" content="{THEME_COLOR}">
+    <link rel="canonical" href="{escaped_url}">
+    <meta property="og:type" content="{page_type}">
+    <meta property="og:site_name" content="db_vol_1">
+    <meta property="og:title" content="{escaped_title}">
+    <meta property="og:description" content="{escaped_description}">
+    <meta property="og:url" content="{escaped_url}">
+    <meta property="og:image" content="{escaped_image_url}">
+    <meta property="og:image:alt" content="{escaped_title}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{escaped_title}">
+    <meta name="twitter:description" content="{escaped_description}">
+    <meta name="twitter:image" content="{escaped_image_url}">"""
+
+
+def insert_metadata(path: Path, block: str) -> None:
+    content = path.read_text(encoding="utf-8")
+    marker_pattern = re.compile(
+        r'\n(?:    <!-- Generated (?:page|blog) metadata;.*?-->\n)?'
+        r'    <meta name="description"[^>]*>.*'
+        r'    <meta name="twitter:image"[^>]*>[^\n]*'
+        r'(?:\n    <script type="application/ld\+json">.*?</script>[^\n]*)?',
+        re.DOTALL,
+    )
+    replacement = "\n" + block
+    if marker_pattern.search(content):
+        content = marker_pattern.sub(replacement, content, count=1)
+    else:
+        head_end = re.search(r"</head>", content, re.IGNORECASE)
+        if head_end is None:
+            print(f"Warning: skipping metadata; page has no </head>: {path}")
+            return
+        content = (
+            content[: head_end.start()]
+            + replacement
+            + "\n"
+            + content[head_end.start() :]
+        )
+    path.write_text(content, encoding="utf-8", newline="\n")
+
+
+def render_page_metadata() -> None:
+    """Add baseline social metadata to every valid HTML page."""
+    for path in ROOT.rglob("*.html"):
+        relative_path = path.relative_to(ROOT).as_posix()
+        content = path.read_text(encoding="utf-8")
+        title_match = re.search(r"<title>(.*?)</title>", content, re.IGNORECASE | re.DOTALL)
+        if title_match is None:
+            print(f"Warning: skipping metadata; page has no <title>: {relative_path}")
+            continue
+        title = html.unescape(title_match.group(1).strip())
+        description = title
+        page_url = absolute_url(relative_path)
+        image_url = absolute_url(DEFAULT_IMAGE)
+        insert_metadata(
+            path,
+            generated_metadata_block(
+                title=title,
+                description=description,
+                page_url=page_url,
+                image_url=image_url,
+            ),
+        )
 
 
 def metadata_block(post: dict) -> str:
@@ -55,8 +130,8 @@ def metadata_block(post: dict) -> str:
         },
         ensure_ascii=True,
     )
-    return f"""    <!-- Generated blog metadata; do not edit between these markers. -->
-    <meta name="description" content="{description}">
+    return f"""    <meta name="description" content="{description}">
+    <meta name="theme-color" content="{THEME_COLOR}">
     <link rel="canonical" href="{escaped_url}">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="db_vol_1">
@@ -64,6 +139,7 @@ def metadata_block(post: dict) -> str:
     <meta property="og:description" content="{description}">
     <meta property="og:url" content="{escaped_url}">
     <meta property="og:image" content="{escaped_image_url}">
+    <meta property="og:image:alt" content="{title}">
     <meta property="article:published_time" content="{published}">
     <meta property="article:modified_time" content="{modified}">
     <meta property="article:section" content="{section}">
@@ -72,8 +148,7 @@ def metadata_block(post: dict) -> str:
     <meta name="twitter:title" content="{title}">
     <meta name="twitter:description" content="{description}">
     <meta name="twitter:image" content="{escaped_image_url}">
-    <script type="application/ld+json">{structured_data}</script>
-    <!-- End generated blog metadata. -->"""
+    <script type="application/ld+json">{structured_data}</script>"""
 
 
 def render_post_metadata(post: dict) -> None:
@@ -87,24 +162,7 @@ def render_post_metadata(post: dict) -> None:
         )
         return
 
-    content = post_path.read_text(encoding="utf-8")
-    marker_pattern = re.compile(
-        r"\n    <!-- Generated blog metadata;.*?    <!-- End generated blog metadata\. -->",
-        re.DOTALL,
-    )
-    block = "\n" + metadata_block(post)
-    if marker_pattern.search(content):
-        content = marker_pattern.sub(block, content, count=1)
-    else:
-        head_end = re.search(r"</head>", content, re.IGNORECASE)
-        if head_end is None:
-            print(
-                f"Warning: skipping metadata for {post['title']!r}; "
-                f"post file has no </head>: {relative_url}"
-            )
-            return
-        content = content[: head_end.start()] + block + "\n" + content[head_end.start() :]
-    post_path.write_text(content, encoding="utf-8", newline="\n")
+    insert_metadata(post_path, metadata_block(post))
     print(f"Generated blog metadata in {post_path}")
 
 
@@ -210,19 +268,9 @@ def main() -> None:
     with MAP_PATH.open(encoding="utf-8") as map_file:
         blog_map = json.load(map_file)
 
-    blog_cards = render_blog_posts(blog_map.get("posts", []))
-    project_cards = render_projects(blog_map.get("projects", []))
+    render_page_metadata()
     for post in blog_map.get("posts", []):
         render_post_metadata(post)
-
-    for path in HTML_FILES:
-        content = path.read_text(encoding="utf-8")
-        if "blog-post-container" in content:
-            content = replace_container(content, "blog-post-container", blog_cards)
-        if "projects-container" in content:
-            content = replace_container(content, "projects-container", project_cards)
-        path.write_text(content, encoding="utf-8", newline="\n")
-        print(f"Generated static content in {path}")
 
 
 if __name__ == "__main__":
