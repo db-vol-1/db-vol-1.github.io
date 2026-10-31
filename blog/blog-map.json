@@ -1,0 +1,50 @@
+{
+    "posts": [
+        {
+            "title": "Sample Blog Post",
+            "url": "./blog/post/sample-post.html",
+            "date": "2024-06-01",
+            "last_updated": "2024-06-01",   
+            "description": "This is a sample blog post.",
+            "tags": ["Cybersecurity", "Threat Intel"],
+            "image": "./blog/sample-post-image.jpg"
+        },
+                {
+            "title": "Proxmox Homelab Breakdown",
+            "url": "./blog/post/Proxmox-Homelab.html",
+            "date": "2026-10-30",
+            "last_updated": "2026-10-30",   
+            "description": "An Optiplex and a dream",
+            "tags": ["Linux", "Homelab"],
+            "image": "./images/assets/proxmox.png"
+        },
+        {
+            "title": "Opentickets and scope management",
+            "url": "./blog/post/scope-management.html",
+            "date": "2026-10-30",
+            "last_updated": "2026-05-30",   
+            "description": "example",
+            "tags": ["Linux", "Homelab"],
+            "image": "./images/assets/proxmox.png"
+        }
+    ],
+    "projects": [
+        {
+            "title": "Sample Project",
+            "description": "This is a sample project.",
+            "image": "./pages/sample-project-image.jpg",
+            "started": "2024-06-01",
+            "ended": "2025-08-31",
+            "related_blog_posts": ["./blog/sample-post.html"],
+            "github_url": "https://github.com/username/sample-project"
+        },
+        {
+            "title": "Proxmox Homelab",
+            "description": "Runs various services and VMs for NextCloud, Home Assistant and more.",
+            "image": "./images/assets/proxmox.png",
+            "started": "2026-10-30",
+            "ended": null,
+            "related_blog_posts": ["./blog/post/Proxmox-Homelab.html"]
+        }
+    ]
+}

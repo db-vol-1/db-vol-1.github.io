@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /pages/about.html
+Disallow: /pages/contact.html
+
+Sitemap: /sitemap.xml
