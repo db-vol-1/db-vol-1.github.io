@@ -21,6 +21,26 @@
         --url-color:#007bff;
     }
 }
+@media (prefers-color-scheme: dark) {
+    body:has(.theme-toggle:checked) {
+        --background-color: #ffffff;
+        --text-color: #000000;
+        --header-color: #f5f5f7;
+        --tag-color: #0178d0;
+        --outline-color: #0a3452;
+        --url-color: #0063ce;
+    }
+}
+@media (prefers-color-scheme: light) {
+    body:has(.theme-toggle:checked) {
+        --background-color: #1e1e1e;
+        --text-color: #ffffff;
+        --header-color: #181818;
+        --tag-color: #999999;
+        --outline-color: #2b2b2b;
+        --url-color: #007bff;
+    }
+}
 main, footer, .nav-list {
     & a {
         color: var(--url-color);
@@ -78,6 +98,57 @@ header {
     background-color: var(--header-color);
     padding: 10px 0;
 }
+.nav-toggle,
+.theme-toggle {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    opacity: 0;
+}
+.nav-toggle-label,
+.theme-toggle-label {
+    align-items: center;
+    border: 1px solid var(--outline-color);
+    border-radius: 0.35rem;
+    color: var(--text-color);
+    cursor: pointer;
+    display: inline-flex;
+    gap: 0.45rem;
+    padding: 0.45rem 0.7rem;
+}
+.nav-toggle-label {
+    display: none;
+}
+.theme-toggle-label {
+    margin-left: 1rem;
+}
+.nav-toggle-label::before {
+    content: "\2630";
+    font-size: 1.1em;
+    line-height: 1;
+}
+.nav-toggle:checked + .nav-toggle-label::before {
+    content: "\00d7";
+    font-size: 1.35em;
+}
+.theme-toggle-label::before {
+    content: "\263e";
+    font-size: 1.1em;
+    line-height: 1;
+}
+@media (prefers-color-scheme: dark) {
+    .theme-toggle-label::before {
+        content: "\2600";
+    }
+}
+.theme-toggle:checked + .theme-toggle-label::before {
+    content: "\2600";
+}
+@media (prefers-color-scheme: dark) {
+    .theme-toggle:checked + .theme-toggle-label::before {
+        content: "\263e";
+    }
+}
 .nav-list {
     list-style: none;
     text-align: center;
@@ -91,10 +162,35 @@ header {
     text-decoration: none;
 }
 @media (max-width: 600px) {
+    .nav-toggle-label {
+        display: block;
+        margin-left: auto;
+    }
     .navbar {
         flex-basis: 100%;
         margin-left: 0;
     }
+    .nav-list {
+        display: none;
+        padding-top: 0.5rem;
+        width: 100%;
+    }
+    .nav-list li {
+        display: block;
+        margin: 0;
+    }
+    .nav-list a {
+        display: block;
+        padding: 0.65rem;
+    }
+    .nav-toggle:checked ~ .navbar .nav-list {
+        display: block;
+    }
+}
+.nav-toggle:focus-visible + .nav-toggle-label,
+.theme-toggle:focus-visible + .theme-toggle-label {
+    outline: 2px solid var(--url-color);
+    outline-offset: 3px;
 }
 main {
     flex: 1;
