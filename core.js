@@ -86,7 +86,7 @@ function renderProjects(container, projects) {
         }`;
 
         details.append(title, description, date);
-        if (project.related_blog_posts?.length > 0) {
+        if (project.related_blog_posts?.[0]) {
             const readMore = document.createElement("a");
             readMore.className = "read-more";
             readMore.href = resolvePath(project.related_blog_posts[0]);

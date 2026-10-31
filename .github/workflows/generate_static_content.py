@@ -209,7 +209,7 @@ def render_projects(projects: list[dict]) -> str:
             f'{("Current" if project["ended"] is None else format_date(project["ended"]))}'
             "</time>",
         ]
-        if project.get("related_blog_posts"):
+        if project.get("related_blog_posts") and project["related_blog_posts"][0]:
             details.append(
                 f'                <a class="read-more" href="{html.escape(absolute_url(project["related_blog_posts"][0]))}">Read more</a>'
             )
