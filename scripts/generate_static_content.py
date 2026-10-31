@@ -72,7 +72,8 @@ def render_projects(projects: list[dict]) -> str:
             )
         if project.get("github_url"):
             details.append(
-                f'                <a class="read-more" href="{html.escape(project["github_url"])}" target="_blank" rel="noopener noreferrer">GitHub Repository</a>'
+                f'                <a class="read-more" href="{html.escape(project["github_url"])}" target="_blank" rel="noopener noreferrer">'
+                '<i class="fa-brands fa-github" aria-hidden="true"></i> GitHub Repository</a>'
             )
         cards.append(
             f"""        <article class="project-card">
