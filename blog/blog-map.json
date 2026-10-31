@@ -36,6 +36,14 @@
             "started": "2026-07-10",
             "ended": null,
             "related_blog_posts": ["./blog/post/Proxmox-Homelab.html"]
+        },
+        {
+            "title": "This Website",
+            "description": "This entire website has been made from scratch and is hosted on github pages. The website makes heavy use of Github Workflows to automatically handle static HTML embeding and generating feeds. Accessability and no-script compatability was part of its core design.",
+            "image": "./images/favicon.ico",
+            "started": "2026-10-29",
+            "ended": null,
+            "related_blog_posts": [""]
         }
     ]
 }
