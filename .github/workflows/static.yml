@@ -46,6 +46,7 @@ jobs:
           grep -q 'data-static-content="true"' pages/projects.html
           grep -q 'class="blog-post-card"' index.html
           grep -q 'class="blog-post-card"' blog/browse.html
+          grep -q 'class="project-card"' index.html
           grep -q 'class="project-card"' pages/projects.html
       - name: Generate RSS feed
         run: python scripts/generate_feed.py

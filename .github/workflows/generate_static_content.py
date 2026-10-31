@@ -282,17 +282,15 @@ def main() -> None:
             newline="\n",
         )
 
-    projects_path = ROOT / "pages" / "projects.html"
-    projects_content = projects_path.read_text(encoding="utf-8")
-    projects_path.write_text(
-        replace_container(
-            projects_content,
-            "projects-container",
-            render_projects(blog_map.get("projects", [])),
-        ),
-        encoding="utf-8",
-        newline="\n",
-    )
+    project_cards = render_projects(blog_map.get("projects", []))
+    for relative_path in ("index.html", "pages/projects.html"):
+        projects_path = ROOT / relative_path
+        projects_content = projects_path.read_text(encoding="utf-8")
+        projects_path.write_text(
+            replace_container(projects_content, "projects-container", project_cards),
+            encoding="utf-8",
+            newline="\n",
+        )
 
 
 if __name__ == "__main__":
