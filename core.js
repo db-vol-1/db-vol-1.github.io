@@ -28,6 +28,16 @@ async function loadBlogPosts() {
     });
 }
 
+const themeToggle = document.querySelector(".theme-toggle");
+
+if (themeToggle) {
+    themeToggle.checked = localStorage.getItem("darkMode") === "true";
+
+    themeToggle.addEventListener("change", () => {
+        localStorage.setItem("darkMode", String(themeToggle.checked));
+    });
+}
+
 async function loadProjects() {
     const containers = document.querySelectorAll(".projects-container");
     if (!containers.length) return;
