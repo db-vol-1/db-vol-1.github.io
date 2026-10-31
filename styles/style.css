@@ -58,6 +58,16 @@ main, footer, .nav-list {
         }
     }
 }
+@media (prefers-color-scheme: dark) {
+    body:has(.theme-toggle:checked) header img {
+        filter: invert(1);
+    }
+}
+@media (prefers-color-scheme: light) {
+    body:has(.theme-toggle:checked) header img {
+        filter: none;
+    }
+}
 html, body {
     min-height: 100%;
 }
