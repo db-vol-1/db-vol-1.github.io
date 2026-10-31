@@ -11,7 +11,7 @@ from urllib.parse import urljoin
 
 ROOT = Path(__file__).resolve().parents[1]
 MAP_PATH = ROOT / "blog" / "blog-map.json"
-SITE_URL = "https://db-vol-1.github.io/portfolio/"
+SITE_URL = "https://db-vol-1.github.io/"
 HTML_FILES = [
     ROOT / "index.html",
     ROOT / "blog" / "browse.html",

@@ -2,14 +2,14 @@
 <rss version="2.0">
     <channel xmlns:atom="http://www.w3.org/2005/Atom">
         <title>db_vol_1 Blog</title>
-        <link>https://db-vol-1.github.io/portfolio/</link>
+        <link>https://db-vol-1.github.io/</link>
         <description>Articles from the db_vol_1 blog.</description>
         <language>en-us</language>
-        <atom:link href="https://db-vol-1.github.io/portfolio/feed.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="https://db-vol-1.github.io/feed.xml" rel="self" type="application/rss+xml" />
         <item>
             <title>Proxmox Homelab Breakdown</title>
-            <link>https://db-vol-1.github.io/portfolio/blog/post/Proxmox-Homelab.html</link>
-            <guid isPermaLink="true">https://db-vol-1.github.io/portfolio/blog/post/Proxmox-Homelab.html</guid>
+            <link>https://db-vol-1.github.io/blog/post/Proxmox-Homelab.html</link>
+            <guid isPermaLink="true">https://db-vol-1.github.io/blog/post/Proxmox-Homelab.html</guid>
             <pubDate>Fri, 30 Oct 2026 00:00:00 +0000</pubDate>
             <description>An Optiplex and a dream</description>
             <category>Linux</category>

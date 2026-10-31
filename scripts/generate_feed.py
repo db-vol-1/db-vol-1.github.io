@@ -25,8 +25,10 @@ def rss_date(value: str) -> str:
 
 
 def site_url_from_environment() -> str:
-    repository = os.environ.get("GITHUB_REPOSITORY", "db-vol-1/portfolio")
+    repository = os.environ.get("GITHUB_REPOSITORY", "db-vol-1/db-vol-1.github.io")
     owner, _, name = repository.partition("/")
+    if name.endswith(".github.io"):
+        return f"https://{name}"
     return f"https://{owner}.github.io/{name}"
 
 

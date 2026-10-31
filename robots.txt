@@ -3,4 +3,4 @@ Allow: /
 Disallow: /pages/about.html
 Disallow: /pages/contact.html
 
-Sitemap: https://db-vol-1.github.io/portfolio/sitemap.xml
+Sitemap: https://db-vol-1.github.io/sitemap.xml

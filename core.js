@@ -1,6 +1,6 @@
 "use strict";
 
-const SITE_URL = "https://db-vol-1.github.io/portfolio/";
+const SITE_URL = "https://db-vol-1.github.io/";
 const resolvePath = (path) =>
     new URL(path.replace(/^\.\//, ""), SITE_URL).href;
 

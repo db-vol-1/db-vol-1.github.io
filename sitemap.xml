@@ -1,19 +1,19 @@
 <?xml version='1.0' encoding='utf-8'?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-        <loc>https://db-vol-1.github.io/portfolio/blog/browse.html</loc>
+        <loc>https://db-vol-1.github.io/blog/browse.html</loc>
     </url>
     <url>
-        <loc>https://db-vol-1.github.io/portfolio/blog/post/examplepost.html</loc>
+        <loc>https://db-vol-1.github.io/blog/post/examplepost.html</loc>
     </url>
     <url>
-        <loc>https://db-vol-1.github.io/portfolio/blog/post/Proxmox-Homelab.html</loc>
+        <loc>https://db-vol-1.github.io/blog/post/Proxmox-Homelab.html</loc>
         <lastmod>2026-10-30</lastmod>
     </url>
     <url>
-        <loc>https://db-vol-1.github.io/portfolio/index.html</loc>
+        <loc>https://db-vol-1.github.io/index.html</loc>
     </url>
     <url>
-        <loc>https://db-vol-1.github.io/portfolio/pages/projects.html</loc>
+        <loc>https://db-vol-1.github.io/pages/projects.html</loc>
     </url>
 </urlset>
