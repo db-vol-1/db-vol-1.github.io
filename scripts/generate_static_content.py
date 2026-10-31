@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render blog and project cards into the static HTML pages."""
+"""Render static pages and social metadata from the blog map."""
 
 import html
 import json
@@ -21,6 +21,91 @@ HTML_FILES = [
 
 def absolute_url(path: str) -> str:
     return urljoin(SITE_URL, path.lstrip("./"))
+
+
+def metadata_block(post: dict) -> str:
+    """Build crawler metadata for a blog post."""
+    relative_url = post["url"].lstrip("./")
+    post_url = absolute_url(relative_url)
+    image_url = absolute_url(post["image"])
+    title = html.escape(post["title"], quote=True)
+    description = html.escape(post["description"], quote=True)
+    escaped_url = html.escape(post_url, quote=True)
+    escaped_image_url = html.escape(image_url, quote=True)
+    published = html.escape(post["date"], quote=True)
+    modified = html.escape(post.get("last_updated", post["date"]), quote=True)
+    post_tags = post.get("tags") or ["Blog"]
+    section = html.escape(post_tags[0], quote=True)
+    tags = "\n".join(
+        f'    <meta property="article:tag" content="{html.escape(tag, quote=True)}">'
+        for tag in post_tags
+    )
+    structured_data = json.dumps(
+        {
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": post["title"],
+            "description": post["description"],
+            "url": post_url,
+            "image": [image_url],
+            "datePublished": post["date"],
+            "dateModified": post.get("last_updated", post["date"]),
+            "author": {"@type": "Person", "name": "db_vol_1"},
+            "keywords": post_tags,
+        },
+        ensure_ascii=True,
+    )
+    return f"""    <!-- Generated blog metadata; do not edit between these markers. -->
+    <meta name="description" content="{description}">
+    <link rel="canonical" href="{escaped_url}">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="db_vol_1">
+    <meta property="og:title" content="{title}">
+    <meta property="og:description" content="{description}">
+    <meta property="og:url" content="{escaped_url}">
+    <meta property="og:image" content="{escaped_image_url}">
+    <meta property="article:published_time" content="{published}">
+    <meta property="article:modified_time" content="{modified}">
+    <meta property="article:section" content="{section}">
+{tags}
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{title}">
+    <meta name="twitter:description" content="{description}">
+    <meta name="twitter:image" content="{escaped_image_url}">
+    <script type="application/ld+json">{structured_data}</script>
+    <!-- End generated blog metadata. -->"""
+
+
+def render_post_metadata(post: dict) -> None:
+    """Insert or replace generated metadata in a mapped blog post."""
+    relative_url = post["url"].lstrip("./")
+    post_path = ROOT / relative_url
+    if not post_path.is_file():
+        print(
+            f"Warning: skipping metadata for {post['title']!r}; "
+            f"post file does not exist: {relative_url}"
+        )
+        return
+
+    content = post_path.read_text(encoding="utf-8")
+    marker_pattern = re.compile(
+        r"\n    <!-- Generated blog metadata;.*?    <!-- End generated blog metadata\. -->",
+        re.DOTALL,
+    )
+    block = "\n" + metadata_block(post)
+    if marker_pattern.search(content):
+        content = marker_pattern.sub(block, content, count=1)
+    else:
+        head_end = re.search(r"</head>", content, re.IGNORECASE)
+        if head_end is None:
+            print(
+                f"Warning: skipping metadata for {post['title']!r}; "
+                f"post file has no </head>: {relative_url}"
+            )
+            return
+        content = content[: head_end.start()] + block + "\n" + content[head_end.start() :]
+    post_path.write_text(content, encoding="utf-8", newline="\n")
+    print(f"Generated blog metadata in {post_path}")
 
 
 def format_date(value: str) -> str:
@@ -127,6 +212,9 @@ def main() -> None:
 
     blog_cards = render_blog_posts(blog_map.get("posts", []))
     project_cards = render_projects(blog_map.get("projects", []))
+    for post in blog_map.get("posts", []):
+        render_post_metadata(post)
+
     for path in HTML_FILES:
         content = path.read_text(encoding="utf-8")
         if "blog-post-container" in content:
