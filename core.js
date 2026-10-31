@@ -1,10 +1,8 @@
 "use strict";
 
-const isNestedPage = /\/(pages|blog)\//.test(window.location.pathname);
+const SITE_URL = "https://db-vol-1.github.io/portfolio/";
 const resolvePath = (path) =>
-    isNestedPage && path.startsWith("./")
-        ? `../${path.slice(2)}`
-        : path;
+    new URL(path.replace(/^\.\//, ""), SITE_URL).href;
 
 async function loadBlogMap() {
     const response = await fetch(resolvePath("./blog/blog-map.json"));
