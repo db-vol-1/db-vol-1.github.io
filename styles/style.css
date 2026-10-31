@@ -124,35 +124,38 @@ header {
     min-width: 2.5rem;
     padding-inline: 0.6rem;
 }
-.nav-toggle-label::before {
-    content: "\2630";
-    font-family: Arial, sans-serif;
-    font-size: 1.1em;
-    line-height: 1;
-    margin-right: 0.45rem;
+.nav-toggle-label .fa-xmark {
+    display: none;
 }
-.nav-toggle:checked + .nav-toggle-label::before {
-    content: "\00d7";
-    font-size: 1.35em;
+.nav-toggle:checked + .nav-toggle-label .fa-bars {
+    display: none;
 }
-.theme-toggle-label::before {
-    content: "\f186";
-    font-family: "Font Awesome 6 Free";
-    font-weight: 900;
-    font-size: 1.1em;
-    line-height: 1;
+.nav-toggle:checked + .nav-toggle-label .fa-xmark {
+    display: inline-block;
+}
+.theme-toggle-label .fa-sun {
+    display: none;
 }
 @media (prefers-color-scheme: dark) {
-    .theme-toggle-label::before {
-        content: "\f185";
+    .theme-toggle-label .fa-moon {
+        display: none;
+    }
+    .theme-toggle-label .fa-sun {
+        display: inline-block;
     }
 }
-.theme-toggle:checked + .theme-toggle-label::before {
-    content: "\f185";
+.theme-toggle:checked + .theme-toggle-label .fa-moon {
+    display: none;
+}
+.theme-toggle:checked + .theme-toggle-label .fa-sun {
+    display: inline-block;
 }
 @media (prefers-color-scheme: dark) {
-    .theme-toggle:checked + .theme-toggle-label::before {
-        content: "\f186";
+    .theme-toggle:checked + .theme-toggle-label .fa-sun {
+        display: none;
+    }
+    .theme-toggle:checked + .theme-toggle-label .fa-moon {
+        display: inline-block;
     }
 }
 .nav-list {
