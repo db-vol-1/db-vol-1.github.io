@@ -31,10 +31,22 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Generate static content
         run: python .github/workflows/generate_static_content.py
+      - name: Verify static listings
+        run: |
+          grep -q 'data-static-content="true"' index.html
+          grep -q 'data-static-content="true"' blog/browse.html
+          grep -q 'data-static-content="true"' pages/projects.html
+          grep -q 'class="blog-post-card"' index.html
+          grep -q 'class="blog-post-card"' blog/browse.html
+          grep -q 'class="project-card"' pages/projects.html
       - name: Generate RSS feed
         run: python scripts/generate_feed.py
       - name: Upload artifact
