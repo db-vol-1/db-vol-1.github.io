@@ -9,7 +9,7 @@ from pathlib import Path
 from urllib.parse import urljoin
 
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 MAP_PATH = ROOT / "blog" / "blog-map.json"
 SITE_URL = "https://db-vol-1.github.io/"
 DEFAULT_IMAGE = "./images/favicon.ico"
