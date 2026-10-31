@@ -83,8 +83,8 @@ def render_page_metadata() -> None:
         if title_match is None:
             print(f"Warning: skipping metadata; page has no <title>: {relative_path}")
             continue
-        title = html.unescape(title_match.group(1).strip())
-        description = title
+        description = html.unescape(title_match.group(1).strip())
+        title = path.stem
         page_url = absolute_url(relative_path)
         image_url = absolute_url(DEFAULT_IMAGE)
         insert_metadata(
