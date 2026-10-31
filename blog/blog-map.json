@@ -31,9 +31,9 @@
         },
         {
             "title": "Proxmox Homelab",
-            "description": "Runs various services and VMs for NextCloud, Home Assistant and more.",
+            "description": "My homelab currently runs various services and VMs for NextCloud, Home Assistant and more. I've learned so much about linux systems administration from manging it. In the near future I intend to setup a IDS on the homelab and eventually also have it do network routing services.",
             "image": "./images/assets/proxmox.png",
-            "started": "2026-10-30",
+            "started": "2026-07-10",
             "ended": null,
             "related_blog_posts": ["./blog/post/Proxmox-Homelab.html"]
         }
