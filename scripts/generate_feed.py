@@ -13,6 +13,7 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 MAP_PATH = ROOT / "blog" / "blog-map.json"
 FEED_PATH = ROOT / "feed.xml"
+SITEMAP_PATH = ROOT / "sitemap.xml"
 
 
 def parse_date(value: str) -> datetime:
@@ -84,6 +85,34 @@ def build_feed(site_url: str) -> ElementTree.Element:
     return channel
 
 
+def build_sitemap(site_url: str) -> ElementTree.Element:
+    with MAP_PATH.open(encoding="utf-8") as map_file:
+        blog_map = json.load(map_file)
+
+    mapped_dates = {
+        post["url"].lstrip("./"): post.get("last_updated", post["date"])
+        for post in blog_map.get("posts", [])
+    }
+    disallowed_paths = {"pages/about.html", "pages/contact.html"}
+    urlset = ElementTree.Element(
+        "urlset",
+        {"xmlns": "http://www.sitemaps.org/schemas/sitemap/0.9"},
+    )
+    site_url = site_url.rstrip("/") + "/"
+
+    for page_path in sorted(ROOT.rglob("*.html")):
+        relative_path = page_path.relative_to(ROOT).as_posix()
+        if relative_path in disallowed_paths:
+            continue
+
+        url = ElementTree.SubElement(urlset, "url")
+        ElementTree.SubElement(url, "loc").text = urljoin(site_url, relative_path)
+        if relative_path in mapped_dates:
+            ElementTree.SubElement(url, "lastmod").text = mapped_dates[relative_path]
+
+    return urlset
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--site-url", default=site_url_from_environment())
@@ -95,6 +124,11 @@ def main() -> None:
     ElementTree.indent(tree, space="    ")
     tree.write(FEED_PATH, encoding="utf-8", xml_declaration=True)
     print(f"Generated {FEED_PATH}")
+
+    sitemap = ElementTree.ElementTree(build_sitemap(args.site_url))
+    ElementTree.indent(sitemap, space="    ")
+    sitemap.write(SITEMAP_PATH, encoding="utf-8", xml_declaration=True)
+    print(f"Generated {SITEMAP_PATH}")
 
 
 if __name__ == "__main__":
