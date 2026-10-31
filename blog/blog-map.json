@@ -1,15 +1,6 @@
 {
     "posts": [
         {
-            "title": "Sample Blog Post",
-            "url": "./blog/post/sample-post.html",
-            "date": "2024-06-01",
-            "last_updated": "2024-06-01",   
-            "description": "This is a sample blog post.",
-            "tags": ["Cybersecurity", "Threat Intel"],
-            "image": "./blog/sample-post-image.jpg"
-        },
-                {
             "title": "Proxmox Homelab Breakdown",
             "url": "./blog/post/Proxmox-Homelab.html",
             "date": "2026-10-30",
@@ -30,13 +21,13 @@
     ],
     "projects": [
         {
-            "title": "Sample Project",
-            "description": "This is a sample project.",
-            "image": "./pages/sample-project-image.jpg",
-            "started": "2024-06-01",
-            "ended": "2025-08-31",
-            "related_blog_posts": ["./blog/sample-post.html"],
-            "github_url": "https://github.com/username/sample-project"
+            "title": "Open Tickets | Secure Software Design Class Group Project",
+            "description": "An open source IT Ticket Management system designed to be fully self-hostable. Web frontend and Python backend with database services through MySQL. For this project I built the backend database handler and authenication. This was my first time building a fullstack app and it has taught me so much about backend and web systems. During the iterative design of the project I found and fixed various security vulnrabilies. This application was a team effort, and I learned valuable skills about managing a shared codebase. After the semester ended I wanted to continue project developmet, I made design documentation, started triaging issues and new features. Ultimately I had to indefidently pause development due to other commitments (College).",
+            "image": "./images/icons/OT-logo.png",
+            "started": "2026-02-01",
+            "ended": "2026-07-25",
+            "related_blog_posts": [""],
+            "github_url": "https://github.com/OpenTicketsCollective/OpenTickets"
         },
         {
             "title": "Proxmox Homelab",
