@@ -250,6 +250,40 @@ main {
     padding: 3vw
 
 }
+.Blog {
+    width: min(100%, 60rem);
+    margin: 0 auto;
+    padding: 1rem 0 clamp(3rem, 8vw, 6rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+.Blog > .main-img {
+    display: block;
+    width: min(100%, 55rem);
+    height: auto;
+    max-height: 32rem;
+    object-fit: contain;
+    margin-bottom: 1.5rem;
+}
+.Blog > .title,
+.Blog > .description,
+.Blog > .tags,
+.Blog > .time,
+.Blog > p,
+.Blog > h3 {
+    width: 100%;
+    max-width: 55rem;
+}
+.Blog > .tags,
+.Blog > .time {
+    color: var(--tag-color);
+}
+.Blog > p,
+.Blog > h3:not(.description) {
+    text-align: left;
+}
 .recent-blog-post {
     display: block;
     margin-bottom: 1em;
@@ -324,6 +358,16 @@ main {
     text-decoration: underline;
 }
 @media (max-width: 600px) {
+    .Blog {
+        padding-inline: 1rem;
+        padding-bottom: 3rem;
+    }
+
+    .Blog > .main-img {
+        width: 100%;
+        max-height: none;
+    }
+
     .blog-post-card,
     .project-card {
         flex-direction: column;
