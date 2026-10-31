@@ -272,6 +272,28 @@ def main() -> None:
     for post in blog_map.get("posts", []):
         render_post_metadata(post)
 
+    blog_cards = render_blog_posts(blog_map.get("posts", []))
+    for relative_path in ("index.html", "blog/browse.html"):
+        page_path = ROOT / relative_path
+        content = page_path.read_text(encoding="utf-8")
+        page_path.write_text(
+            replace_container(content, "blog-post-container", blog_cards),
+            encoding="utf-8",
+            newline="\n",
+        )
+
+    projects_path = ROOT / "pages" / "projects.html"
+    projects_content = projects_path.read_text(encoding="utf-8")
+    projects_path.write_text(
+        replace_container(
+            projects_content,
+            "projects-container",
+            render_projects(blog_map.get("projects", [])),
+        ),
+        encoding="utf-8",
+        newline="\n",
+    )
+
 
 if __name__ == "__main__":
     main()
