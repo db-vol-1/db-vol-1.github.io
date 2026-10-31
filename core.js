@@ -21,7 +21,11 @@ async function loadBlogPosts() {
     if (!containers.length) return;
 
     const { posts } = await blogMapPromise;
-    containers.forEach((container) => renderBlogPosts(container, posts));
+    containers.forEach((container) => {
+        if (container.dataset.staticContent !== "true") {
+            renderBlogPosts(container, posts);
+        }
+    });
 }
 
 async function loadProjects() {
@@ -29,7 +33,11 @@ async function loadProjects() {
     if (!containers.length) return;
 
     const { projects } = await blogMapPromise;
-    containers.forEach((container) => renderProjects(container, projects));
+    containers.forEach((container) => {
+        if (container.dataset.staticContent !== "true") {
+            renderProjects(container, projects);
+        }
+    });
 }
 
 function formatDate(dateString) {
