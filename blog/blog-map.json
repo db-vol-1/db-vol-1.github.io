@@ -23,7 +23,7 @@
         {
             "title": "Open Tickets | Secure Software Design Class Group Project",
             "description": "An open source IT Ticket Management system designed to be fully self-hostable. Web frontend and Python backend with database services through MySQL. For this project I built the backend database handler and authenication. This was my first time building a fullstack app and it has taught me so much about backend and web systems. During the iterative design of the project I found and fixed various security vulnrabilies. This application was a team effort, and I learned valuable skills about managing a shared codebase. After the semester ended I wanted to continue project developmet, I made design documentation, started triaging issues and new features. Ultimately I had to indefidently pause development due to other commitments (College).",
-            "image": "./images/icons/OT-logo.png",
+            "image": "https://github.com/user-attachments/assets/3ef4b53d-79a4-44a7-b378-448ba3a8d1cf",
             "started": "2026-02-01",
             "ended": "2026-07-25",
             "related_blog_posts": [""],
