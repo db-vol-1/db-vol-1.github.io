@@ -1,3 +1,8 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 :root {
     --background-color: #ffffff;
     --text-color: #000000;
@@ -396,9 +401,4 @@ main {
 br {
     padding-top: 1vw;
     padding-bottom: 1vw;
-}
-header, footer {
-    margin-left: 0;
-    margin-right: 0;
-    margin-top: 0;
 }
