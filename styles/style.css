@@ -398,3 +398,7 @@ main {
         max-height: 16em;
     }
 }
+br {
+    padding-top: 1vw;
+    padding-bottom: 1vw;
+}
