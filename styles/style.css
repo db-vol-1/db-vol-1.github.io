@@ -345,6 +345,10 @@ main {
 .project-card h3 {
     margin-bottom: 0.5em;
 }
+.project-card img[src$="OT%20Logo%20Modern.jxl"],
+.project-card img[src$="favicon.ico"] {
+    object-fit: contain;
+} /*temp bandaid fix*/
 .project-card time {
     display: block;
     margin-top: 1em;
