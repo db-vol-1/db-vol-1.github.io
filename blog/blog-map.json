@@ -8,15 +8,6 @@
             "description": "An Optiplex and a dream",
             "tags": ["Linux", "Homelab"],
             "image": "./images/assets/proxmox.png"
-        },
-        {
-            "title": "Opentickets and scope management",
-            "url": "./blog/post/scope-management.html",
-            "date": "2026-10-30",
-            "last_updated": "2026-05-30",   
-            "description": "example",
-            "tags": ["Linux", "Homelab"],
-            "image": "./images/assets/proxmox.png"
         }
     ],
     "projects": [
