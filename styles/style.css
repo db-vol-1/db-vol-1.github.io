@@ -1,5 +1,6 @@
 * {
     box-sizing: border-box;
+    margin-left: 0;
 }
 :root {
     --background-color: #ffffff;
