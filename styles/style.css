@@ -254,7 +254,7 @@ main {
     padding-bottom: clamp(3rem, 8vw, 6rem);
     text-align: left;
     & img {
-        width: clamp(400px,30vw,800px)
+        width: clamp(400px,30vw,1000px)
     }
 }
 .Blog > .main-img {
