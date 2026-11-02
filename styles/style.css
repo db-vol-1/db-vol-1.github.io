@@ -270,7 +270,11 @@ main {
 .Blog > .description {
     text-align: center;
 }
-.Blog > .tags,
+.Blog > .tags{
+    float: right;
+    margin: 0 1rem 1rem 0;
+    color: var(--tag-color);
+}
 .Blog > .time {
     float: left;
     margin: 0 1rem 1rem 0;
